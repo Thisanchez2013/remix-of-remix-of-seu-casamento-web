@@ -1,0 +1,198 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 30 20% 98%;
+    --foreground: 220 25% 16%;
+    --primary: 24 60% 48%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 35 80% 60%;
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 220 25% 16%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 14% 46%;
+    --accent: 24 40% 92%;
+    --accent-foreground: 24 60% 30%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 24 60% 48%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 25% 16%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 25% 16%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --radius: 0.75rem;
+
+    /* Wedding Design Tokens */
+    --gold: 43 74% 49%;
+    --gold-light: 43 80% 72%;
+    --gold-dark: 30 60% 30%;
+    --cream: 36 33% 97%;
+    --blush: 350 60% 94%;
+
+    --wedding-serif: 'Cormorant Garamond', Georgia, serif;
+    --wedding-sans: 'Montserrat', system-ui, sans-serif;
+
+    /* Shadows & Glows */
+    --shadow-gold: 0 20px 60px -10px hsla(43, 74%, 49%, 0.3);
+    --shadow-elegant: 0 30px 90px -20px rgba(0, 0, 0, 0.12);
+    --glow-primary: 0 0 40px hsla(24, 60%, 48%, 0.2);
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--wedding-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer components {
+
+  /* ─── SECTION SYSTEM ─── */
+  .section-label { 
+    @apply text-primary/90 text-[11px] font-bold tracking-[0.45em] uppercase mb-5 block; 
+  }
+  
+  .section-title { 
+    @apply text-5xl md:text-7xl font-serif italic font-medium leading-tight text-foreground; 
+  }
+  
+  .section-divider {
+    @apply flex items-center justify-center gap-6 my-10;
+  }
+  
+  .section-divider::before, .section-divider::after {
+    content: ''; 
+    @apply w-24 h-px bg-primary/20;
+  }
+
+  /* ─── HERO ─── */
+  .hero-gradient-overlay {
+    background: 
+      linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.25) 40%, rgba(0,0,0,0.55) 100%),
+      linear-gradient(135deg, rgba(0,0,0,0.3) 0%, transparent 60%);
+  }
+
+  .gold-shine {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, hsla(43, 90%, 70%, 0.15) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* ─── DETAIL CARD ─── */
+  .detail-card {
+    @apply bg-white rounded-[2rem] p-10 shadow-[0_20px_70px_-15px_rgba(0,0,0,0.06)] border border-primary/5 hover:border-primary/15 hover:shadow-[0_30px_80px_-15px_rgba(0,0,0,0.1)] transition-all duration-500;
+  }
+
+  .icon-blob {
+    @apply w-16 h-16 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-6;
+  }
+
+  /* ─── RSVP ─── */
+  .rsvp-input {
+    @apply w-full bg-slate-100/50 border border-slate-200/60 rounded-2xl px-6 py-5 text-foreground focus:bg-white focus:border-primary/40 transition-all duration-500 outline-none placeholder:text-slate-400 shadow-sm focus:shadow-xl focus:shadow-primary/5;
+  }
+
+  .input-label {
+    @apply block text-[11px] font-bold tracking-widest text-slate-600 mb-3 ml-2 uppercase;
+  }
+
+  .glass-container {
+    @apply bg-white/95 backdrop-blur-2xl border border-white shadow-[0_30px_90px_-20px_rgba(0,0,0,0.1)];
+    border-radius: 3rem;
+  }
+
+  .btn-soft {
+    @apply relative overflow-hidden bg-primary text-white px-12 py-5 rounded-full font-bold tracking-[0.25em] uppercase text-[12px] shadow-xl shadow-primary/25 transition-all duration-500 hover:bg-foreground hover:shadow-foreground/20 hover:-translate-y-1 active:scale-95;
+  }
+
+  /* ─── PREMIUM ANIMATIONS ─── */
+  .animate-float-slow {
+    animation: float-slow 12s ease-in-out infinite;
+  }
+
+  .animate-shimmer {
+    animation: shimmer 3s linear infinite;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 3s ease-in-out infinite;
+  }
+
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: particle-float var(--duration, 8s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+  }
+
+  @keyframes float-slow {
+    0%, 100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+    33% { transform: translateY(-25px) translateX(15px) rotate(5deg); }
+    66% { transform: translateY(-10px) translateX(-8px) rotate(-3deg); }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 20px hsla(24, 60%, 48%, 0.2); }
+    50% { box-shadow: 0 0 50px hsla(24, 60%, 48%, 0.5); }
+  }
+
+  @keyframes particle-float {
+    0%, 100% { transform: translateY(0) scale(1); opacity: 0.4; }
+    50% { transform: translateY(-40px) scale(1.2); opacity: 0.8; }
+  }
+
+  @keyframes text-reveal {
+    0% { clip-path: inset(0 100% 0 0); }
+    100% { clip-path: inset(0 0% 0 0); }
+  }
+
+  @keyframes orbit {
+    0% { transform: rotate(0deg) translateX(180px) rotate(0deg); }
+    100% { transform: rotate(360deg) translateX(180px) rotate(-360deg); }
+  }
+
+  .animate-orbit {
+    animation: orbit 20s linear infinite;
+  }
+
+  @keyframes count-down {
+    0% { transform: translateY(0) scale(1); }
+    25% { transform: translateY(-4px) scale(1.05); }
+    50% { transform: translateY(0) scale(1); }
+  }
+
+  .animate-count {
+    animation: count-down 0.5s ease-in-out;
+  }
+}
+
+html { 
+  scroll-behavior: smooth;
+  font-size: 16px; 
+}
+
+/* Scrollbar Premium */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { 
+  background: hsl(var(--primary) / 0.3); 
+  border-radius: 10px; 
+}
+::-webkit-scrollbar-thumb:hover { background: hsl(var(--primary) / 0.6); }
