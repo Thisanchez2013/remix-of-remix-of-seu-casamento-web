@@ -50,7 +50,7 @@ const HeroSection = () => {
   return (
     <section
       ref={containerRef}
-      className="relative h-screen min-h-[700px] w-full overflow-hidden flex items-center justify-center"
+      className="relative h-screen min-h-[700px] w-full overflow-hidden flex items-end justify-center pb-20"
     >
       {/* ── LAYER 1: Imagem Parallax ── */}
       <motion.div style={{ y: backgroundY }} className="absolute inset-0 z-0 will-change-transform">
@@ -156,7 +156,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: loaded ? 1 : 0, y: loaded ? 0 : 30 }}
           transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
-          className="flex flex-col items-center mb-8"
+          className="flex flex-col items-center mb-4"
         >
           <div className="flex items-center gap-4 mb-5">
             <motion.div
@@ -180,7 +180,7 @@ const HeroSection = () => {
         </motion.div>
 
         {/* Nome do Casal */}
-        <div className="overflow-hidden mb-4">
+        <div className="overflow-hidden mb-2">
           <motion.h1
             initial={{ y: 120, opacity: 0 }}
             animate={{ y: loaded ? 0 : 120, opacity: loaded ? 1 : 0 }}
@@ -197,7 +197,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: loaded ? 1 : 0, scale: loaded ? 1 : 0.5 }}
           transition={{ duration: 0.8, delay: 0.9, type: "spring", stiffness: 150 }}
-          className="flex items-center justify-center gap-6 my-2 md:my-4"
+          className="flex items-center justify-center gap-6 my-1 md:my-2"
         >
           <div className="h-px w-12 md:w-20 bg-gradient-to-r from-transparent via-white/40 to-white/20" />
           <span
@@ -209,7 +209,7 @@ const HeroSection = () => {
           <div className="h-px w-12 md:w-20 bg-gradient-to-l from-transparent via-white/40 to-white/20" />
         </motion.div>
 
-        <div className="overflow-hidden mb-8">
+        <div className="overflow-hidden mb-4">
           <motion.h1
             initial={{ y: 120, opacity: 0 }}
             animate={{ y: loaded ? 0 : 120, opacity: loaded ? 1 : 0 }}
@@ -226,7 +226,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: loaded ? 1 : 0, y: loaded ? 0 : 20 }}
           transition={{ duration: 1, delay: 1.1 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mb-6"
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mb-4"
         >
           <span className="text-white/70 font-serif italic text-lg md:text-xl tracking-widest">
             15 de Novembro de 2025
@@ -242,7 +242,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: loaded ? 1 : 0, y: loaded ? 0 : 30 }}
           transition={{ duration: 0.8, delay: 1.3 }}
-          className="flex justify-center gap-3 md:gap-5 mb-8"
+          className="flex justify-center gap-3 md:gap-5 mb-4"
         >
           {[
             { value: timeLeft.days, label: "Dias" },

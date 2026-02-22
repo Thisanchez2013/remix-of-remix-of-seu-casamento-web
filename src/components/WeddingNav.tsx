@@ -48,15 +48,15 @@ const WeddingNav = () => {
       initial={{ y: -80 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-background/95 backdrop-blur-md shadow-sm" : "bg-background/90 backdrop-blur-sm"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        scrolled ? "bg-background/95 backdrop-blur-md shadow-sm" : "bg-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         <a
           href="/"
           onClick={(e) => { e.preventDefault(); navigate("/"); }}
-          className="font-serif text-2xl italic tracking-wide text-foreground hover:text-primary transition-colors"
+          className={`font-serif text-2xl italic tracking-wide transition-colors ${scrolled ? "text-foreground hover:text-primary" : "text-white hover:text-white/80"}`}
         >
           T <span className="font-serif">&</span> R
         </a>
@@ -69,7 +69,9 @@ const WeddingNav = () => {
               href={link.href}
               onClick={(e) => handleClick(e, link)}
               className={`relative text-xs font-medium tracking-[0.15em] transition-colors ${
-                isActive(link) ? "text-primary" : "text-foreground/80 hover:text-primary"
+                scrolled
+                  ? (isActive(link) ? "text-primary" : "text-foreground/80 hover:text-primary")
+                  : (isActive(link) ? "text-white" : "text-white/70 hover:text-white")
               }`}
             >
               {link.label}
@@ -85,7 +87,7 @@ const WeddingNav = () => {
 
         {/* Mobile toggle */}
         <button
-          className="md:hidden text-foreground"
+          className={`md:hidden transition-colors ${scrolled ? "text-foreground" : "text-white"}`}
           onClick={() => setMobileOpen(!mobileOpen)}
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

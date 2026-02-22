@@ -115,7 +115,7 @@ const PadrinhosSection = () => {
           onMouseLeave={() => setIsPaused(false)}
         >
           {/* Cards row */}
-          <div className="relative w-full flex items-center justify-center" style={{ height: "460px" }}>
+          <div className="relative w-full flex items-center justify-center" style={{ height: "560px" }}>
             {padrinhos.map((person, i) => {
               const offset = getOffset(i);
               const isActive = offset === 0;
@@ -124,8 +124,8 @@ const PadrinhosSection = () => {
               // Only show cards within 2 positions of active
               if (absOffset > 2) return null;
 
-              const xPos = offset * 220;
-              const scale = isActive ? 1 : 0.7 - absOffset * 0.05;
+              const xPos = offset * 260;
+              const scale = isActive ? 1 : 0.65 - absOffset * 0.05;
               const opacity = isActive ? 1 : 0.5 - (absOffset - 1) * 0.15;
               const zIndex = 10 - absOffset;
 
@@ -148,12 +148,12 @@ const PadrinhosSection = () => {
                         ? "shadow-[0_40px_100px_-20px_hsl(var(--primary)/0.4)] ring-2 ring-primary/30"
                         : "shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)]"
                     }`}
-                    style={{ width: isActive ? 260 : 180 }}
+                    style={{ width: isActive ? 320 : 200 }}
                   >
                     {/* Photo */}
                     <div
                       className="relative overflow-hidden"
-                      style={{ height: isActive ? 320 : 220, transition: "height 0.4s ease" }}
+                      style={{ height: isActive ? 400 : 260, transition: "height 0.4s ease" }}
                     >
                       <img
                         src={person.image}
