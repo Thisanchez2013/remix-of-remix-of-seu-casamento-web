@@ -1,4 +1,4 @@
-import { motion, useInView, useAnimation, AnimatePresence } from "framer-motion";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useEffect, useState, useCallback } from "react";
 
 import casalImg from "@/assets/padrinhos-casal.jpg";
@@ -13,72 +13,62 @@ const padrinhos = [
     role: "MADRINHA DA NOIVA",
     image: anaImg,
     description: "A confidente de todas as horas. Aquela que conhece meus silêncios e celebra minhas vitórias como se fossem dela.",
-    color: "from-rose-200/40 to-pink-100/20",
   },
   {
     name: "Felipe & Juliana",
     role: "CASAL DE PADRINHOS",
     image: casalImg,
     description: "Exemplos de amor e cumplicidade que queremos levar conosco para nossa nova jornada.",
-    color: "from-amber-200/40 to-yellow-100/20",
   },
   {
     name: "Ricardo Almeida",
     role: "PADRINHO DO NOIVO",
     image: ricardoImg,
     description: "Aquele que esteve presente em cada capítulo da nossa história, sempre com um sorriso e um conselho sábio.",
-    color: "from-slate-200/40 to-zinc-100/20",
   },
   {
     name: "Camila Ferreira",
     role: "MADRINHA",
     image: camilaImg,
     description: "Alegria contagiante e coração generoso. Cada festa fica mais bonita com ela presente.",
-    color: "from-emerald-200/40 to-teal-100/20",
   },
   {
     name: "Lucas Mendes",
     role: "PADRINHO",
     image: lucasImg,
     description: "Amigo desde a infância, testemunha de cada sonho e cada conquista ao longo dos anos.",
-    color: "from-orange-200/40 to-amber-100/20",
   },
 ];
 
-const RADIUS = 320;
 const AUTO_ROTATE_MS = 3000;
 
 const PadrinhosSection = () => {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
   const [activeIndex, setActiveIndex] = useState(0);
-  const [angle, setAngle] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const total = padrinhos.length;
-  const angleStep = 360 / total;
-  const autoRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const rotate = useCallback((dir: 1 | -1) => {
-    setAngle(prev => prev + dir * angleStep);
-    setActiveIndex(prev => (prev - dir + total) % total);
-  }, [angleStep, total]);
+  const goTo = useCallback((index: number) => {
+    setActiveIndex(((index % total) + total) % total);
+  }, [total]);
+
+  const next = useCallback(() => goTo(activeIndex + 1), [activeIndex, goTo]);
+  const prev = useCallback(() => goTo(activeIndex - 1), [activeIndex, goTo]);
 
   useEffect(() => {
     if (isPaused) return;
-    autoRef.current = setInterval(() => rotate(1), AUTO_ROTATE_MS);
-    return () => { if (autoRef.current) clearInterval(autoRef.current); };
-  }, [rotate, isPaused]);
+    const interval = setInterval(next, AUTO_ROTATE_MS);
+    return () => clearInterval(interval);
+  }, [next, isPaused]);
 
-  const getCardStyle = (i: number) => {
-    const cardAngle = (i * angleStep - angle) * (Math.PI / 180);
-    const x = Math.sin(cardAngle) * RADIUS;
-    const z = Math.cos(cardAngle) * RADIUS;
-    const normalizedZ = (z + RADIUS) / (2 * RADIUS); // 0 to 1
-    const scale = 0.55 + normalizedZ * 0.55;
-    const opacity = 0.25 + normalizedZ * 0.75;
-    const isActive = i === activeIndex;
-    return { x, z, scale, opacity, isActive, normalizedZ };
+  // Calculate position offset from active for each card
+  const getOffset = (i: number) => {
+    let diff = i - activeIndex;
+    // Normalize to range [-floor(total/2), ceil(total/2)]
+    if (diff > Math.floor(total / 2)) diff -= total;
+    if (diff < -Math.floor(total / 2)) diff += total;
+    return diff;
   };
 
   const active = padrinhos[activeIndex];
@@ -92,7 +82,6 @@ const PadrinhosSection = () => {
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 rounded-full bg-primary/5 blur-3xl animate-float-slow" />
         <div className="absolute bottom-20 right-10 w-96 h-96 rounded-full bg-primary/8 blur-3xl animate-float-slow" style={{ animationDelay: "4s" }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/3 blur-[80px]" />
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -116,7 +105,7 @@ const PadrinhosSection = () => {
           </p>
         </motion.div>
 
-        {/* 3D Carousel */}
+        {/* Carousel */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={inView ? { opacity: 1, scale: 1 } : {}}
@@ -125,107 +114,96 @@ const PadrinhosSection = () => {
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
-          {/* 3D Stage */}
-          <div
-            className="relative w-full"
-            style={{ height: "480px", perspective: "1200px" }}
-          >
-            <div
-              className="absolute inset-0 flex items-center justify-center"
-              style={{ transformStyle: "preserve-3d" }}
-            >
-              {padrinhos.map((person, i) => {
-                const { x, z, scale, opacity, isActive, normalizedZ } = getCardStyle(i);
-                return (
-                  <motion.div
-                    key={person.name}
-                    className="absolute cursor-pointer"
-                    animate={{
-                      x,
-                      z,
-                      scale,
-                      opacity,
-                    }}
-                    transition={{ type: "spring", stiffness: 80, damping: 20 }}
-                    style={{
-                      zIndex: Math.round(normalizedZ * 100),
-                      transformStyle: "preserve-3d",
-                    }}
-                    onClick={() => {
-                      const diff = i - activeIndex;
-                      const normalizedDiff = ((diff % total) + total) % total;
-                      if (normalizedDiff <= total / 2) {
-                        setAngle(prev => prev + normalizedDiff * angleStep);
-                        setActiveIndex(i);
-                      } else {
-                        const steps = total - normalizedDiff;
-                        setAngle(prev => prev - steps * angleStep);
-                        setActiveIndex(i);
-                      }
-                    }}
+          {/* Cards row */}
+          <div className="relative w-full flex items-center justify-center" style={{ height: "460px" }}>
+            {padrinhos.map((person, i) => {
+              const offset = getOffset(i);
+              const isActive = offset === 0;
+              const absOffset = Math.abs(offset);
+
+              // Only show cards within 2 positions of active
+              if (absOffset > 2) return null;
+
+              const xPos = offset * 220;
+              const scale = isActive ? 1 : 0.7 - absOffset * 0.05;
+              const opacity = isActive ? 1 : 0.5 - (absOffset - 1) * 0.15;
+              const zIndex = 10 - absOffset;
+
+              return (
+                <motion.div
+                  key={person.name}
+                  className="absolute cursor-pointer"
+                  animate={{
+                    x: xPos,
+                    scale,
+                    opacity: Math.max(0.2, opacity),
+                  }}
+                  transition={{ type: "spring", stiffness: 120, damping: 20 }}
+                  style={{ zIndex }}
+                  onClick={() => goTo(i)}
+                >
+                  <div
+                    className={`relative rounded-3xl overflow-hidden transition-shadow duration-500 ${
+                      isActive
+                        ? "shadow-[0_40px_100px_-20px_hsl(var(--primary)/0.4)] ring-2 ring-primary/30"
+                        : "shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)]"
+                    }`}
+                    style={{ width: isActive ? 260 : 180 }}
                   >
-                    {/* Card */}
+                    {/* Photo */}
                     <div
-                      className={`relative rounded-3xl overflow-hidden transition-all duration-500 ${
-                        isActive
-                          ? "shadow-[0_40px_100px_-20px_hsl(var(--primary)/0.5)] ring-2 ring-primary/40"
-                          : "shadow-[0_20px_60px_-15px_rgba(0,0,0,0.2)]"
-                      }`}
-                      style={{ width: isActive ? "260px" : "200px", transition: "width 0.4s ease" }}
+                      className="relative overflow-hidden"
+                      style={{ height: isActive ? 320 : 220, transition: "height 0.4s ease" }}
                     >
-                      {/* Photo */}
-                      <div className="relative overflow-hidden" style={{ height: isActive ? "320px" : "240px", transition: "height 0.4s ease" }}>
-                        <img
-                          src={person.image}
-                          alt={person.name}
-                          className="w-full h-full object-cover object-top"
-                          style={{ filter: isActive ? "none" : "grayscale(30%) brightness(0.85)" }}
-                        />
-                        {/* Gradient overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                      <img
+                        src={person.image}
+                        alt={person.name}
+                        className="w-full h-full object-cover object-top transition-all duration-500"
+                        style={{ filter: isActive ? "none" : "grayscale(40%) brightness(0.8)" }}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
 
-                        {/* Role badge */}
-                        <div className="absolute top-4 left-0 right-0 flex justify-center">
-                          <span className="bg-primary/90 backdrop-blur-sm text-primary-foreground text-[9px] font-bold tracking-[0.3em] px-4 py-1.5 rounded-full uppercase">
-                            {person.role}
-                          </span>
-                        </div>
-
-                        {/* Name on image */}
-                        <div className="absolute bottom-4 left-4 right-4">
-                          <h3 className="font-serif text-white text-xl italic font-medium leading-tight drop-shadow-lg">
-                            {person.name}
-                          </h3>
-                        </div>
+                      {/* Role badge */}
+                      <div className="absolute top-4 left-0 right-0 flex justify-center">
+                        <span className="bg-primary/90 backdrop-blur-sm text-primary-foreground text-[9px] font-bold tracking-[0.3em] px-4 py-1.5 rounded-full uppercase">
+                          {person.role}
+                        </span>
                       </div>
 
-                      {/* Description (only active) */}
-                      <AnimatePresence>
-                        {isActive && (
-                          <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: "auto" }}
-                            exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.35 }}
-                            className="bg-white/95 backdrop-blur-sm px-5 py-4"
-                          >
-                            <p className="text-muted-foreground text-xs italic leading-relaxed text-center font-serif">
-                              {person.description}
-                            </p>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
+                      {/* Name */}
+                      <div className="absolute bottom-4 left-4 right-4">
+                        <h3 className="font-serif text-white text-xl italic font-medium leading-tight drop-shadow-lg">
+                          {person.name}
+                        </h3>
+                      </div>
                     </div>
-                  </motion.div>
-                );
-              })}
-            </div>
+
+                    {/* Description (only active) */}
+                    <AnimatePresence>
+                      {isActive && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.35 }}
+                          className="bg-white/95 backdrop-blur-sm px-5 py-4"
+                        >
+                          <p className="text-muted-foreground text-xs italic leading-relaxed text-center font-serif">
+                            {person.description}
+                          </p>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
 
           {/* Controls */}
-          <div className="flex items-center gap-6 mt-8">
+          <div className="flex items-center gap-6 mt-4">
             <button
-              onClick={() => rotate(-1)}
+              onClick={prev}
               className="w-12 h-12 rounded-full border border-primary/30 bg-white/80 backdrop-blur-sm text-primary shadow-lg hover:bg-primary hover:text-primary-foreground transition-all duration-300 flex items-center justify-center hover:scale-110 active:scale-95"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -233,21 +211,11 @@ const PadrinhosSection = () => {
               </svg>
             </button>
 
-            {/* Dots */}
             <div className="flex items-center gap-2">
               {padrinhos.map((_, i) => (
                 <button
                   key={i}
-                  onClick={() => {
-                    const diff = i - activeIndex;
-                    const normalizedDiff = ((diff % total) + total) % total;
-                    if (normalizedDiff <= total / 2) {
-                      setAngle(prev => prev + normalizedDiff * angleStep);
-                    } else {
-                      setAngle(prev => prev - (total - normalizedDiff) * angleStep);
-                    }
-                    setActiveIndex(i);
-                  }}
+                  onClick={() => goTo(i)}
                   className={`rounded-full transition-all duration-300 ${
                     i === activeIndex
                       ? "w-6 h-2.5 bg-primary"
@@ -258,7 +226,7 @@ const PadrinhosSection = () => {
             </div>
 
             <button
-              onClick={() => rotate(1)}
+              onClick={next}
               className="w-12 h-12 rounded-full border border-primary/30 bg-white/80 backdrop-blur-sm text-primary shadow-lg hover:bg-primary hover:text-primary-foreground transition-all duration-300 flex items-center justify-center hover:scale-110 active:scale-95"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -267,7 +235,7 @@ const PadrinhosSection = () => {
             </button>
           </div>
 
-          {/* Active card info below on mobile */}
+          {/* Mobile info */}
           <AnimatePresence mode="wait">
             <motion.div
               key={activeIndex}

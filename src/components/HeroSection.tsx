@@ -64,7 +64,7 @@ const HeroSection = () => {
       <div className="absolute inset-0 z-[1] bg-gradient-to-b from-black/60 via-black/30 to-black/70" />
       <div className="absolute inset-0 z-[2] bg-gradient-to-r from-black/40 via-transparent to-black/20" />
       {/* Glow central dourado */}
-      <div className="absolute inset-0 z-[3] bg-[radial-gradient(ellipse_80%_60%_at_50%_40%,_rgba(180,130,60,0.12)_0%,_transparent_70%)]" />
+      <div className="absolute inset-0 z-[3] bg-[radial-gradient(ellipse_80%_60%_at_50%_40%,_rgba(60,120,200,0.12)_0%,_transparent_70%)]" />
 
       {/* Scroll parallax extra overlay */}
       <motion.div
@@ -110,7 +110,7 @@ const HeroSection = () => {
               height: 6 + i * 2,
               left: `${15 + i * 17}%`,
               top: `${20 + i * 13}%`,
-              background: `radial-gradient(circle, hsla(43,80%,70%,0.9) 0%, transparent 70%)`,
+              background: `radial-gradient(circle, hsla(210,70%,70%,0.9) 0%, transparent 70%)`,
             }}
             animate={{
               y: [0, -70, 0],
@@ -226,7 +226,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: loaded ? 1 : 0, y: loaded ? 0 : 20 }}
           transition={{ duration: 1, delay: 1.1 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mb-12"
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mb-6"
         >
           <span className="text-white/70 font-serif italic text-lg md:text-xl tracking-widest">
             15 de Novembro de 2025
@@ -242,7 +242,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: loaded ? 1 : 0, y: loaded ? 0 : 30 }}
           transition={{ duration: 0.8, delay: 1.3 }}
-          className="flex justify-center gap-3 md:gap-5 mb-14"
+          className="flex justify-center gap-3 md:gap-5 mb-8"
         >
           {[
             { value: timeLeft.days, label: "Dias" },
@@ -315,7 +315,7 @@ const HeroSection = () => {
             whileTap={{ scale: 0.96 }}
             className="relative group px-10 md:px-14 py-4 md:py-5 rounded-full overflow-hidden font-bold text-[11px] tracking-[0.35em] uppercase text-white shadow-[0_10px_40px_rgba(0,0,0,0.3)]"
             style={{
-              background: "linear-gradient(135deg, hsl(24,60%,48%) 0%, hsl(35,80%,58%) 100%)",
+              background: "linear-gradient(135deg, hsl(210,60%,48%) 0%, hsl(220,70%,58%) 100%)",
             }}
           >
             <span className="relative z-10">Confirmar Presença</span>
