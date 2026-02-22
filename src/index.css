@@ -8,18 +8,18 @@
   :root {
     --background: 30 20% 98%;
     --foreground: 220 25% 16%;
-    --primary: 24 60% 48%;
+    --primary: 210 60% 48%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 35 80% 60%;
+    --primary-glow: 220 70% 60%;
     --secondary: 220 14% 96%;
     --secondary-foreground: 220 25% 16%;
     --muted: 220 14% 96%;
     --muted-foreground: 220 14% 46%;
-    --accent: 24 40% 92%;
-    --accent-foreground: 24 60% 30%;
+    --accent: 210 40% 92%;
+    --accent-foreground: 210 60% 30%;
     --border: 220 13% 91%;
     --input: 220 13% 91%;
-    --ring: 24 60% 48%;
+    --ring: 210 60% 48%;
     --card: 0 0% 100%;
     --card-foreground: 220 25% 16%;
     --popover: 0 0% 100%;
@@ -29,9 +29,9 @@
     --radius: 0.75rem;
 
     /* Wedding Design Tokens */
-    --gold: 43 74% 49%;
-    --gold-light: 43 80% 72%;
-    --gold-dark: 30 60% 30%;
+    --gold: 210 70% 50%;
+    --gold-light: 210 80% 72%;
+    --gold-dark: 210 60% 30%;
     --cream: 36 33% 97%;
     --blush: 350 60% 94%;
 
@@ -39,9 +39,9 @@
     --wedding-sans: 'Montserrat', system-ui, sans-serif;
 
     /* Shadows & Glows */
-    --shadow-gold: 0 20px 60px -10px hsla(43, 74%, 49%, 0.3);
+    --shadow-gold: 0 20px 60px -10px hsla(210, 70%, 50%, 0.3);
     --shadow-elegant: 0 30px 90px -20px rgba(0, 0, 0, 0.12);
-    --glow-primary: 0 0 40px hsla(24, 60%, 48%, 0.2);
+    --glow-primary: 0 0 40px hsla(210, 60%, 48%, 0.2);
   }
 }
 
@@ -149,8 +149,8 @@
   }
 
   @keyframes pulse-glow {
-    0%, 100% { box-shadow: 0 0 20px hsla(24, 60%, 48%, 0.2); }
-    50% { box-shadow: 0 0 50px hsla(24, 60%, 48%, 0.5); }
+    0%, 100% { box-shadow: 0 0 20px hsla(210, 60%, 48%, 0.2); }
+    50% { box-shadow: 0 0 50px hsla(210, 60%, 48%, 0.5); }
   }
 
   @keyframes particle-float {
