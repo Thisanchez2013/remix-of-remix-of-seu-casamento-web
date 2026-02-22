@@ -50,7 +50,7 @@ const CelebracaoSection = () => {
       {/* ── BLOCO SUPERIOR: Fundo Escuro com Impacto ── */}
       <div className="relative py-28 md:py-44 overflow-hidden"
         style={{
-          background: "linear-gradient(160deg, hsl(220,30%,10%) 0%, hsl(24,40%,12%) 50%, hsl(220,30%,8%) 100%)",
+          background: "linear-gradient(160deg, hsl(215,35%,12%) 0%, hsl(220,40%,16%) 50%, hsl(215,35%,10%) 100%)",
         }}
       >
         {/* Textura de grain */}
@@ -64,7 +64,7 @@ const CelebracaoSection = () => {
         {/* Glow central */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] pointer-events-none"
           style={{
-            background: "radial-gradient(ellipse at center, hsla(24,80%,55%,0.15) 0%, transparent 70%)",
+            background: "radial-gradient(ellipse at center, hsla(210,70%,55%,0.15) 0%, transparent 70%)",
           }}
         />
 
@@ -74,9 +74,9 @@ const CelebracaoSection = () => {
 
         {/* Orbs flutuantes */}
         {[
-          { x: "10%", y: "20%", size: 300, color: "hsla(24,80%,55%,0.06)" },
-          { x: "80%", y: "60%", size: 250, color: "hsla(220,80%,60%,0.04)" },
-          { x: "50%", y: "80%", size: 200, color: "hsla(350,60%,60%,0.04)" },
+          { x: "10%", y: "20%", size: 300, color: "hsla(210,70%,55%,0.08)" },
+          { x: "80%", y: "60%", size: 250, color: "hsla(220,80%,60%,0.06)" },
+          { x: "50%", y: "80%", size: 200, color: "hsla(200,60%,60%,0.05)" },
         ].map((orb, i) => (
           <motion.div
             key={i}
@@ -163,7 +163,7 @@ const CelebracaoSection = () => {
             >
               {/* Glow on hover */}
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-[2rem]"
-                style={{ background: "radial-gradient(ellipse at 50% 0%, hsla(24,80%,55%,0.12) 0%, transparent 70%)" }}
+                style={{ background: "radial-gradient(ellipse at 50% 0%, hsla(210,70%,55%,0.12) 0%, transparent 70%)" }}
               />
               <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent group-hover:via-white/30 transition-all duration-700" />
 
@@ -256,8 +256,8 @@ const CelebracaoSection = () => {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="relative overflow-hidden rounded-[2rem] p-8 md:p-10 group"
             style={{
-              background: "linear-gradient(135deg, hsla(24,60%,48%,0.25) 0%, hsla(24,60%,48%,0.08) 100%)",
-              border: "1px solid hsla(24,60%,55%,0.2)",
+              background: "linear-gradient(135deg, hsla(210,60%,50%,0.25) 0%, hsla(210,60%,50%,0.08) 100%)",
+              border: "1px solid hsla(210,60%,55%,0.2)",
             }}
           >
             <div className="absolute -right-6 -bottom-6 opacity-[0.07]">
@@ -265,7 +265,7 @@ const CelebracaoSection = () => {
             </div>
             <div className="relative z-10 flex flex-col md:flex-row md:items-center gap-6">
               <div className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0"
-                style={{ background: "hsla(24,80%,60%,0.2)", border: "1px solid hsla(24,80%,60%,0.3)" }}
+                style={{ background: "hsla(210,70%,55%,0.2)", border: "1px solid hsla(210,70%,55%,0.3)" }}
               >
                 <Info className="w-6 h-6 text-white/70" />
               </div>
