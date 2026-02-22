@@ -50,7 +50,7 @@ const HeroSection = () => {
   return (
     <section
       ref={containerRef}
-      className="relative h-screen min-h-[700px] w-full overflow-hidden flex items-end justify-center pb-20"
+      className="relative h-screen min-h-[700px] w-full overflow-hidden flex items-center justify-center pt-16"
     >
       {/* ── LAYER 1: Imagem Parallax ── */}
       <motion.div style={{ y: backgroundY }} className="absolute inset-0 z-0 will-change-transform">
