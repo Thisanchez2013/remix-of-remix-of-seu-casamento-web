@@ -11,7 +11,6 @@ const Index = () => {
       <WeddingNav />
       <HeroSection />
       <CelebracaoSection />
-      <CelebracaoSection />
       <GaleriaSection />
       <RsvpSection />
       <FooterSection />

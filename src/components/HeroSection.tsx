@@ -201,10 +201,10 @@ const HeroSection = () => {
         >
           <div className="h-px w-12 md:w-20 bg-gradient-to-r from-transparent via-white/40 to-white/20" />
           <span
-            className="font-serif italic text-white/80"
-            style={{ fontSize: "clamp(2rem, 5vw, 4rem)" }}
+            className="text-white/80"
+            style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)", fontFamily: "'Great Vibes', cursive" }}
           >
-            &
+            e
           </span>
           <div className="h-px w-12 md:w-20 bg-gradient-to-l from-transparent via-white/40 to-white/20" />
         </motion.div>
