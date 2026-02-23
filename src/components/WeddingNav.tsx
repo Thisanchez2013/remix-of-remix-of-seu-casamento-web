@@ -60,7 +60,7 @@ const WeddingNav = () => {
           onClick={(e) => { e.preventDefault(); navigate("/"); }}
           className={`font-serif text-2xl italic tracking-wide transition-colors ${scrolled || location.pathname !== "/" ? "text-foreground hover:text-primary" : "text-white hover:text-white/80"}`}
         >
-          T <span className="font-serif">&</span> R
+          T <span style={{ fontFamily: "'Great Vibes', cursive" }}>e</span> R
         </a>
 
         {/* Desktop */}

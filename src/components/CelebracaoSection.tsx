@@ -73,7 +73,7 @@ const CelebracaoSection = () => {
               transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
               className="font-serif text-5xl md:text-8xl italic font-light text-foreground leading-none"
             >
-              Quando & Onde
+              Quando <span style={{ fontFamily: "'Great Vibes', cursive" }}>e</span> Onde
             </motion.h2>
           </div>
 
