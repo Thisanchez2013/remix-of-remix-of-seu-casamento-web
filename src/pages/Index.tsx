@@ -1,6 +1,5 @@
 import WeddingNav from "@/components/WeddingNav";
 import HeroSection from "@/components/HeroSection";
-import HistoriaSection from "@/components/HistoriaSection";
 import CelebracaoSection from "@/components/CelebracaoSection";
 import GaleriaSection from "@/components/GaleriaSection";
 import RsvpSection from "@/components/RsvpSection";
@@ -11,7 +10,7 @@ const Index = () => {
     <main className="overflow-x-hidden">
       <WeddingNav />
       <HeroSection />
-      <HistoriaSection />
+      <CelebracaoSection />
       <CelebracaoSection />
       <GaleriaSection />
       <RsvpSection />
