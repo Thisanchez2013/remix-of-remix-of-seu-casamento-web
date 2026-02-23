@@ -7,8 +7,8 @@ const navLinks = [
   { label: "CELEBRAÇÃO", href: "#celebracao", page: "/" },
   { label: "GALERIA", href: "#galeria", page: "/" },
   { label: "PADRINHOS", href: "/padrinhos", page: "/padrinhos" },
-  { label: "PRESENTES", href: "/presentes", page: "/presentes" },
-  { label: "RSVP", href: "#rsvp", page: "/" },
+  { label: "PRESENTE", href: "/presentes", page: "/presentes" }, // Corrigido para PRESENTE
+  { label: "PRESENÇA", href: "#rsvp", page: "/" },             // Corrigido para PRESENÇA
 ];
 
 const WeddingNav = () => {

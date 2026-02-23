@@ -1,6 +1,6 @@
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
-import { Heart, ExternalLink, Gift, Sparkles } from "lucide-react";
+import { Heart, Gift, Sparkles, ArrowRight, Info, MapPin } from "lucide-react";
 
 import imgPanelas from "@/assets/gift-panelas.jpg";
 import imgCama from "@/assets/gift-cama.jpg";
@@ -13,204 +13,113 @@ import imgTv from "@/assets/gift-tv.jpg";
 
 const gifts = [
   {
-    image: imgPanelas,
-    emoji: "🍳",
-    name: "Jogo de Panelas",
-    funnyTitle: "O Kit 'Agora Você Cozinha'",
-    desc: "Conjunto completo de panelas antiaderentes. Porque pedir delivery todo dia é lindo, mas o cartão chora.",
-    funnyNote: "Ideal para tentar a receita que viu no TikTok às 23h.",
-    price: "R$ 450,00",
-    tag: "🔥 Hot",
-    color: "from-orange-400/20 to-red-400/20",
-    border: "border-orange-300/30",
-    glow: "shadow-orange-200/50",
-  },
-  {
-    image: imgCama,
-    emoji: "😴",
-    name: "Jogo de Cama King",
-    funnyTitle: "O Ninho dos Sonhos",
-    desc: "Algodão egípcio 400 fios. Tão macio que acordar vai ser o maior desafio do casamento.",
-    funnyNote: "Aviso: cônjuge pode desaparecer embaixo das cobertas por horas.",
-    price: "R$ 380,00",
-    tag: "💤 Zen",
-    color: "from-blue-300/20 to-indigo-300/20",
-    border: "border-blue-300/30",
-    glow: "shadow-blue-200/50",
-  },
-  {
     image: imgCafe,
-    emoji: "☕",
-    name: "Cafeteira Expresso",
-    funnyTitle: "A Sobrevivência do Casal",
-    desc: "Café barista em casa. Necessário para as manhãs de segunda, pós-briga, e toda vez que alguém deixou a tampa do banheiro aberta.",
-    funnyNote: "Testado e aprovado para crises existenciais matinais.",
+    name: "Estação de Café Barista",
+    category: "Cotidiano",
+    desc: "Para que cada manhã comece com o aroma de um novo dia e a energia necessária para construirmos nossa vida juntos.",
+    impact: "Presente nas nossas manhãs",
     price: "R$ 650,00",
-    tag: "⚡ Must Have",
-    color: "from-amber-400/20 to-yellow-300/20",
-    border: "border-amber-300/30",
-    glow: "shadow-amber-200/50",
   },
   {
     image: imgRobo,
-    emoji: "🤖",
-    name: "Aspirador Robô",
-    funnyTitle: "O Terceiro Integrante",
-    desc: "Um robô que limpa a casa enquanto vocês discutem quem vai lavar a louça. Ele não tem opinião, mas tem eficiência.",
-    funnyNote: "Cuidado: ele vai adotar um nome e virar mascote.",
+    name: "Tecnologia e Conforto",
+    category: "Lar",
+    desc: "O cuidado com o nosso futuro lar. Praticidade para que tenhamos mais tempo um para o outro.",
+    impact: "Zelo pelo nosso ninho",
     price: "R$ 1.200,00",
-    tag: "🏆 Premium",
-    color: "from-slate-400/20 to-zinc-300/20",
-    border: "border-slate-300/30",
-    glow: "shadow-slate-200/50",
   },
   {
     image: imgTacas,
-    emoji: "🥂",
-    name: "Kit Taças de Cristal",
-    funnyTitle: "Para Comemorar Tudo",
-    desc: "6 taças de cristal para vinho e espumante. Porque cada pequena vitória do casamento merece um brinde.",
-    funnyNote: "'Achei as chaves!' 🥂 'Acabei o netflix!' 🥂 'Quinta-feira!' 🥂",
+    name: "Brinde às Conquistas",
+    category: "Celebração",
+    desc: "Taças de cristal para os momentos de comemoração. Cada brinde será uma lembrança do seu carinho.",
+    impact: "Celebrando nossas vitórias",
     price: "R$ 320,00",
-    tag: "✨ Luxo",
-    color: "from-purple-300/20 to-pink-300/20",
-    border: "border-purple-300/30",
-    glow: "shadow-purple-200/50",
-  },
-  {
-    image: imgLua,
-    emoji: "🏝️",
-    name: "Lua de Mel",
-    funnyTitle: "Fuga Autorizada",
-    desc: "Contribua para a viagem dos sonhos do casal! Qualquer valor é bem-vindo — mesmo que seja o preço de um sundae.",
-    funnyNote: "O casal promete mandar foto. E fingir que não checaram o e-mail.",
-    price: "Qualquer valor 💛",
-    tag: "🌟 Especial",
-    color: "from-cyan-400/20 to-teal-300/20",
-    border: "border-cyan-300/30",
-    glow: "shadow-cyan-200/50",
-    featured: true,
   },
   {
     image: imgJantar,
-    emoji: "🍽️",
-    name: "Aparelho de Jantar",
-    funnyTitle: "O Jantar de Domingo",
-    desc: "42 peças de porcelana fina. Para os jantares que começam elegantes e terminam com a família inteira na sala assistindo futebol.",
-    funnyNote: "A sogra vai amar. Garantido.",
+    name: "Aparelho de Jantar Imperial",
+    category: "Recepção",
+    desc: "Para recebermos amigos e família com a elegância e o acolhimento que vocês merecem.",
+    impact: "Encontros inesquecíveis",
     price: "R$ 580,00",
-    tag: "🫶 Família",
-    color: "from-rose-300/20 to-pink-300/20",
-    border: "border-rose-300/30",
-    glow: "shadow-rose-200/50",
+  },
+  {
+    image: imgPanelas,
+    name: "Gastronomia a Dois",
+    category: "Culinária",
+    desc: "O prazer de cozinhar juntos e nutrir o nosso amor através de novas receitas e sabores.",
+    impact: "Nutrindo nossa união",
+    price: "R$ 450,00",
+  },
+  {
+    image: imgCama,
+    name: "Enxoval Premium King",
+    category: "Conforto",
+    desc: "O repouso e a tranquilidade em um ambiente de puro conforto e elegância.",
+    impact: "Nosso descanso diário",
+    price: "R$ 380,00",
   },
   {
     image: imgTv,
-    emoji: "📺",
-    name: 'Smart TV 55"',
-    funnyTitle: "O Cinema Particular",
-    desc: "Para as noites de filme que começam às 20h e terminam às 3h porque 'só mais um episódio'.",
-    funnyNote: "O controle remoto SERÁ motivo de negociação permanente.",
+    name: "Cinema Particular",
+    category: "Lazer",
+    desc: "Noites de filmes e séries que fortalecem nossa parceria e momentos de descontração.",
+    impact: "Nossos momentos de lazer",
     price: "R$ 2.800,00",
-    tag: "🎬 Cinema",
-    color: "from-violet-400/20 to-purple-400/20",
-    border: "border-violet-300/30",
-    glow: "shadow-violet-200/50",
   },
 ];
 
-const GiftCard = ({ gift, index, inView }: { gift: typeof gifts[0]; index: number; inView: boolean }) => {
-  const [hovered, setHovered] = useState(false);
-  const [liked, setLiked] = useState(false);
+const GiftCard = ({ gift, index, inView }: { gift: any; index: number; inView: boolean }) => {
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 50, scale: 0.9 }}
-      animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
-      transition={{ duration: 0.6, delay: 0.1 + index * 0.07, type: "spring", stiffness: 100 }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      className={`relative group rounded-3xl overflow-hidden border ${gift.border} bg-card shadow-lg ${gift.featured ? "md:col-span-2" : ""} cursor-pointer`}
-      style={{
-        boxShadow: hovered ? `0 25px 60px -10px var(--shadow-color, rgba(0,0,0,0.15))` : undefined,
-        transition: "all 0.4s ease",
-      }}
+      initial={{ opacity: 0, y: 30 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.8, delay: index * 0.1 }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="relative group bg-white overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-500"
     >
-      {/* Tag badge */}
-      <div className="absolute top-4 left-4 z-20">
-        <span className={`text-[10px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-full bg-background/90 backdrop-blur-sm border ${gift.border} text-foreground/80`}>
-          {gift.tag}
-        </span>
-      </div>
-
-      {/* Like button */}
-      <button
-        onClick={(e) => { e.stopPropagation(); setLiked(!liked); }}
-        className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-background/90 backdrop-blur-sm border border-border/50 flex items-center justify-center transition-all duration-300 hover:scale-110"
-      >
-        <Heart
-          className={`w-4 h-4 transition-all duration-300 ${liked ? "fill-red-400 text-red-400 scale-125" : "text-muted-foreground"}`}
-        />
-      </button>
-
-      {/* Image */}
-      <div className="relative h-52 overflow-hidden">
+      <div className="aspect-[4/5] relative overflow-hidden">
         <motion.img
           src={gift.image}
           alt={gift.name}
+          animate={{ scale: isHovered ? 1.05 : 1 }}
+          transition={{ duration: 0.7 }}
           className="w-full h-full object-cover"
-          animate={{ scale: hovered ? 1.08 : 1 }}
-          transition={{ duration: 0.5 }}
         />
-        <div className={`absolute inset-0 bg-gradient-to-t ${gift.color} to-transparent`} />
-        {/* Emoji overlay */}
-        <motion.div
-          className="absolute bottom-4 right-4 text-4xl"
-          animate={{ scale: hovered ? 1.3 : 1, rotate: hovered ? 15 : 0 }}
-          transition={{ duration: 0.3, type: "spring" }}
-        >
-          {gift.emoji}
-        </motion.div>
-      </div>
+        <div className={`absolute inset-0 bg-neutral-900/20 transition-opacity duration-500 ${isHovered ? 'opacity-60' : 'opacity-20'}`} />
 
-      {/* Content */}
-      <div className="p-6">
-        <div className="mb-1">
-          <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-primary/70">{gift.name}</p>
-          <h3 className="font-serif text-xl italic font-semibold text-foreground leading-snug mt-1">
-            {gift.funnyTitle}
-          </h3>
-        </div>
+        <div className="absolute inset-0 p-6 flex flex-col justify-end text-white">
+          <motion.div animate={{ y: isHovered ? -5 : 0 }}>
+            <span className="text-[9px] tracking-[0.3em] uppercase font-bold mb-1 block opacity-80 text-wedding-gold">
+              {gift.category}
+            </span>
+            <h3 className="font-serif text-xl italic mb-2">{gift.name}</h3>
+          </motion.div>
 
-        <p className="text-sm text-muted-foreground leading-relaxed mt-3">{gift.desc}</p>
-
-        {/* Funny note */}
-        <AnimatePresence>
-          {hovered && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.25 }}
-              className={`mt-3 rounded-xl px-4 py-3 bg-gradient-to-r ${gift.color} border ${gift.border}`}
-            >
-              <p className="text-xs text-foreground/70 italic">💬 {gift.funnyNote}</p>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Footer */}
-        <div className="flex items-center justify-between mt-5 pt-4 border-t border-border/40">
-          <span className="font-bold text-primary text-base">{gift.price}</span>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className={`flex items-center gap-2 text-xs font-bold tracking-widest uppercase px-4 py-2.5 rounded-full bg-gradient-to-r ${gift.color} border ${gift.border} text-foreground/80 hover:text-foreground transition-all duration-300`}
-          >
-            <Gift className="w-3.5 h-3.5" />
-            Presentear
-            <ExternalLink className="w-3 h-3 opacity-60" />
-          </motion.button>
+          <AnimatePresence>
+            {isHovered && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                className="space-y-3"
+              >
+                <p className="text-xs font-light leading-relaxed opacity-90 line-clamp-2">
+                  {gift.desc}
+                </p>
+                <div className="pt-3 flex items-center justify-between border-t border-white/20">
+                  <span className="text-base font-serif italic">{gift.price}</span>
+                  <button className="flex items-center gap-2 text-[9px] tracking-[0.2em] uppercase bg-white text-black px-4 py-2 rounded-full hover:bg-wedding-gold hover:text-white transition-colors">
+                    Presentear
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </motion.div>
@@ -222,91 +131,103 @@ const PresentesSection = () => {
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="presentes" className="py-24 md:py-36 bg-background relative overflow-hidden">
-
-      {/* Background decorative orbs */}
-      <div className="absolute top-20 left-10 w-72 h-72 rounded-full bg-primary/5 blur-3xl pointer-events-none" />
-      <div className="absolute bottom-20 right-10 w-96 h-96 rounded-full bg-accent/20 blur-3xl pointer-events-none" />
-
+    <section id="presentes" className="py-24 md:py-32 bg-[#FAF9F6] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
-
-        {/* Header */}
+        
+        {/* Header Profissional */}
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
           className="text-center mb-20"
         >
-          <motion.div
-            initial={{ scale: 0, rotate: -180 }}
-            animate={inView ? { scale: 1, rotate: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2, type: "spring" }}
-            className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 text-primary mb-6 mx-auto"
-          >
-            <Sparkles className="w-7 h-7" />
-          </motion.div>
-
-          <p className="section-label">COM MUITO CARINHO (E CRIATIVIDADE)</p>
-          <h2 className="section-title mt-4">Lista de Presentes</h2>
-
-          <div className="section-divider">
-            <Gift className="w-5 h-5 text-primary/50" />
-          </div>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.4 }}
-            className="max-w-2xl mx-auto text-muted-foreground text-base leading-relaxed"
-          >
-            Sua presença já é o presente que o coração pede. 🥹<br />
-            <span className="text-foreground/80 font-medium">Mas... se quiser nos mimar um pouquinho, preparamos uma lista com muito amor e julgamento zero.</span>
-          </motion.p>
-
-          {/* Fun stats bar */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.6 }}
-            className="flex flex-wrap items-center justify-center gap-6 mt-10"
-          >
-            {[
-              { num: "8", label: "presentes disponíveis" },
-              { num: "100%", label: "curadoria do casal" },
-              { num: "∞", label: "gratidão garantida" },
-            ].map((stat, i) => (
-              <div key={i} className="flex items-center gap-3">
-                <div className="text-center">
-                  <p className="font-serif text-3xl italic font-bold text-primary">{stat.num}</p>
-                  <p className="text-xs text-muted-foreground tracking-widest uppercase">{stat.label}</p>
-                </div>
-                {i < 2 && <div className="w-px h-10 bg-border/60 hidden sm:block" />}
-              </div>
-            ))}
-          </motion.div>
+          <span className="text-wedding-gold text-[10px] tracking-[0.5em] uppercase font-bold mb-4 block">
+            Lista de Desejos
+          </span>
+          <h2 className="font-serif text-4xl md:text-6xl italic text-neutral-800 mb-6">
+            Lista de presentes
+          </h2>
+          <div className="w-16 h-[1px] bg-wedding-gold/40 mx-auto mb-6" />
+          <p className="max-w-xl mx-auto text-neutral-500 font-light leading-relaxed italic">
+            Sua presença é o que mais importa. Mas se desejar nos presentear, 
+            aqui estão algumas sugestões que tornarão nosso começo ainda mais especial.
+          </p>
         </motion.div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {/* --- DESTAQUE: LUA DE MEL (HORIZONTAL) --- */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={inView ? { opacity: 1, scale: 1 } : {}}
+          transition={{ duration: 1, delay: 0.2 }}
+          className="relative w-full h-[400px] md:h-[500px] mb-12 group overflow-hidden shadow-2xl"
+        >
+          <motion.img
+            src={imgLua}
+            alt="Lua de Mel"
+            className="absolute inset-0 w-full h-full object-cover"
+            whileHover={{ scale: 1.03 }}
+            transition={{ duration: 10 }} // Movimento bem lento e luxuoso
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
+          
+          <div className="relative h-full flex flex-col justify-center px-8 md:px-16 max-w-2xl text-white">
+            <motion.div
+              initial={{ x: -30, opacity: 0 }}
+              animate={inView ? { x: 0, opacity: 1 } : {}}
+              transition={{ delay: 0.5, duration: 0.8 }}
+            >
+              <div className="flex items-center gap-2 text-wedding-gold mb-4">
+                <MapPin className="w-4 h-4" />
+                <span className="text-[10px] tracking-[0.4em] uppercase font-bold">Destino dos Sonhos</span>
+              </div>
+              <h3 className="font-serif text-5xl md:text-7xl italic mb-6">Lua de Mel</h3>
+              <p className="text-lg font-light leading-relaxed mb-8 opacity-90 italic">
+                "O início da nossa jornada como um só. Sua contribuição nos ajudará a colecionar 
+                momentos inesquecíveis em nosso primeiro destino oficial."
+              </p>
+              
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+                <div className="text-2xl font-serif italic text-wedding-gold">
+                  Contribuição Livre
+                </div>
+                <button className="group flex items-center gap-3 bg-white text-black px-8 py-4 rounded-full text-[10px] tracking-[0.3em] uppercase font-bold hover:bg-wedding-gold hover:text-white transition-all duration-300 shadow-xl">
+                  Realizar este sonho <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </button>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Badge flutuante de Impacto */}
+          <div className="absolute top-8 right-8 hidden md:block">
+            <div className="backdrop-blur-md bg-white/10 border border-white/20 p-4 rounded-2xl flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-wedding-gold/20 flex items-center justify-center text-wedding-gold">
+                <Heart className="w-5 h-5 fill-current" />
+              </div>
+              <div className="text-left">
+                <p className="text-[8px] tracking-[0.2em] uppercase text-white/60">Experiência</p>
+                <p className="text-xs text-white font-medium">Memórias Eternas</p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Grid de Presentes (Outros Itens) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {gifts.map((gift, i) => (
             <GiftCard key={i} gift={gift} index={i} inView={inView} />
           ))}
         </div>
 
-        {/* Bottom CTA */}
+        {/* Footer da Seção */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, delay: 0.8 }}
-          className="text-center mt-16"
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          className="mt-20 text-center border-t border-neutral-200 pt-12"
         >
-          <div className="inline-block bg-card border border-border/50 rounded-3xl px-10 py-8 shadow-sm max-w-lg mx-auto">
-            <p className="text-2xl mb-2">🎁</p>
-            <p className="font-serif text-xl italic text-foreground mb-2">Acima de tudo...</p>
-            <p className="text-muted-foreground text-sm leading-relaxed">
-              A sua presença neste dia especial já é o maior presente que poderíamos receber.{" "}
-              <span className="text-primary font-medium">Obrigado por fazer parte da nossa história!</span> ✨
+          <div className="inline-flex items-center gap-3 text-neutral-400">
+            <Info className="w-4 h-4" />
+            <p className="text-[10px] tracking-widest uppercase font-light">
+              Itens simbólicos que serão convertidos em experiências para o casal.
             </p>
           </div>
         </motion.div>

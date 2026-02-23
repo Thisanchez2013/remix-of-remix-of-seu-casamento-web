@@ -63,16 +63,14 @@ const HeroSection = () => {
       {/* ── LAYER 2: Overlays Multicamada ── */}
       <div className="absolute inset-0 z-[1] bg-gradient-to-b from-black/60 via-black/30 to-black/70" />
       <div className="absolute inset-0 z-[2] bg-gradient-to-r from-black/40 via-transparent to-black/20" />
-      {/* Glow central dourado */}
       <div className="absolute inset-0 z-[3] bg-[radial-gradient(ellipse_80%_60%_at_50%_40%,_rgba(60,120,200,0.12)_0%,_transparent_70%)]" />
 
-      {/* Scroll parallax extra overlay */}
       <motion.div
         style={{ opacity: overlayOpacity }}
         className="absolute inset-0 z-[4] bg-black pointer-events-none"
       />
 
-      {/* ── LAYER 3: Partículas Flutuantes ── */}
+      {/* ── LAYER 3: Partículas ── */}
       <div className="absolute inset-0 z-[5] pointer-events-none overflow-hidden">
         {PARTICLES.map((p) => (
           <motion.div
@@ -99,51 +97,6 @@ const HeroSection = () => {
             }}
           />
         ))}
-
-        {/* Partículas douradas maiores */}
-        {[...Array(5)].map((_, i) => (
-          <motion.div
-            key={`gold-${i}`}
-            className="absolute rounded-full"
-            style={{
-              width: 6 + i * 2,
-              height: 6 + i * 2,
-              left: `${15 + i * 17}%`,
-              top: `${20 + i * 13}%`,
-              background: `radial-gradient(circle, hsla(210,70%,70%,0.9) 0%, transparent 70%)`,
-            }}
-            animate={{
-              y: [0, -70, 0],
-              opacity: [0.15, 0.6, 0.15],
-              scale: [1, 1.5, 1],
-            }}
-            transition={{
-              duration: 7 + i * 2,
-              delay: i * 1.5,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-        ))}
-      </div>
-
-      {/* ── LAYER 4: Linhas decorativas diagonais ── */}
-      <div className="absolute inset-0 z-[5] pointer-events-none overflow-hidden">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.06 }}
-          transition={{ delay: 2, duration: 2 }}
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `repeating-linear-gradient(
-              -45deg,
-              rgba(255,255,255,0.8) 0px,
-              rgba(255,255,255,0.8) 1px,
-              transparent 1px,
-              transparent 60px
-            )`,
-          }}
-        />
       </div>
 
       {/* ── CONTEÚDO PRINCIPAL ── */}
@@ -151,7 +104,6 @@ const HeroSection = () => {
         style={{ y: contentY, opacity: contentOpacity }}
         className="relative z-10 text-center px-6 max-w-5xl mx-auto w-full"
       >
-        {/* Eyebrow */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: loaded ? 1 : 0, y: loaded ? 0 : 30 }}
@@ -164,10 +116,7 @@ const HeroSection = () => {
               transition={{ duration: 1.2, delay: 0.5 }}
               className="h-px w-16 md:w-24 bg-gradient-to-r from-transparent to-white/60"
             />
-            <Heart
-              className="w-3 h-3 text-white/60 fill-white/30"
-              aria-hidden
-            />
+            <Heart className="w-3 h-3 text-white/60 fill-white/30" />
             <motion.div
               animate={{ scaleX: [0, 1] }}
               transition={{ duration: 1.2, delay: 0.5 }}
@@ -179,20 +128,23 @@ const HeroSection = () => {
           </span>
         </motion.div>
 
-        {/* Nome do Casal */}
-        <div className="overflow-hidden mb-2">
+        {/* Nome Thiago - Ajustado padding e overflow para não cortar o 'g' */}
+        <div className="mb-2">
           <motion.h1
             initial={{ y: 120, opacity: 0 }}
             animate={{ y: loaded ? 0 : 120, opacity: loaded ? 1 : 0 }}
             transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
-            className="font-serif italic font-light leading-none text-white"
-            style={{ fontSize: "clamp(3.5rem, 12vw, 9rem)", textShadow: "0 4px 40px rgba(0,0,0,0.4)" }}
+            className="font-serif italic font-light text-white pb-2 px-4"
+            style={{ 
+              fontSize: "clamp(3.5rem, 12vw, 9rem)", 
+              textShadow: "0 4px 40px rgba(0,0,0,0.4)",
+              lineHeight: "1.2" 
+            }}
           >
             Thiago
           </motion.h1>
         </div>
 
-        {/* Separador "&" */}
         <motion.div
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: loaded ? 1 : 0, scale: loaded ? 1 : 0.5 }}
@@ -209,24 +161,28 @@ const HeroSection = () => {
           <div className="h-px w-12 md:w-20 bg-gradient-to-l from-transparent via-white/40 to-white/20" />
         </motion.div>
 
-        <div className="overflow-hidden mb-4">
+        {/* Nome Rafaela - Ajustado padding e overflow para não cortar o 'f' */}
+        <div className="mb-6">
           <motion.h1
             initial={{ y: 120, opacity: 0 }}
             animate={{ y: loaded ? 0 : 120, opacity: loaded ? 1 : 0 }}
             transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.6 }}
-            className="font-serif italic font-light leading-none text-white"
-            style={{ fontSize: "clamp(3.5rem, 12vw, 9rem)", textShadow: "0 4px 40px rgba(0,0,0,0.4)" }}
+            className="font-serif italic font-light text-white pb-2 px-4"
+            style={{ 
+              fontSize: "clamp(3.5rem, 12vw, 9rem)", 
+              textShadow: "0 4px 40px rgba(0,0,0,0.4)",
+              lineHeight: "1.2"
+            }}
           >
             Rafaela
           </motion.h1>
         </div>
 
-        {/* Data & Local */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: loaded ? 1 : 0, y: loaded ? 0 : 20 }}
           transition={{ duration: 1, delay: 1.1 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mb-4"
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mb-8"
         >
           <span className="text-white/70 font-serif italic text-lg md:text-xl tracking-widest">
             15 de Novembro de 2025
@@ -237,83 +193,18 @@ const HeroSection = () => {
           </span>
         </motion.div>
 
-        {/* ── COUNTDOWN PREMIUM ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: loaded ? 1 : 0, y: loaded ? 0 : 30 }}
-          transition={{ duration: 0.8, delay: 1.3 }}
-          className="flex justify-center gap-3 md:gap-5 mb-4"
-        >
-          {[
-            { value: timeLeft.days, label: "Dias" },
-            { value: timeLeft.hours, label: "Horas" },
-            { value: timeLeft.minutes, label: "Min" },
-            { value: timeLeft.seconds, label: "Seg" },
-          ].map((item, i) => (
-            <div key={item.label} className="relative">
-              {/* Card */}
-              <div className="relative group overflow-hidden">
-                <div
-                  className="backdrop-blur-xl border border-white/15 rounded-2xl md:rounded-3xl flex flex-col items-center justify-center px-3 py-3 md:px-6 md:py-5 shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
-                  style={{
-                    background: "linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.05) 100%)",
-                    minWidth: "clamp(60px, 14vw, 90px)",
-                  }}
-                >
-                  {/* Brilho superior */}
-                  <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
-
-                  <AnimatePresence mode="popLayout">
-                    <motion.span
-                      key={item.value}
-                      initial={{ y: -20, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      exit={{ y: 20, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: "easeOut" }}
-                      className="block font-serif text-2xl md:text-4xl text-white font-light tabular-nums"
-                      style={{ textShadow: "0 2px 10px rgba(0,0,0,0.3)" }}
-                    >
-                      {String(item.value).padStart(2, "0")}
-                    </motion.span>
-                  </AnimatePresence>
-
-                  <span className="text-[8px] md:text-[9px] text-white/50 tracking-[0.25em] uppercase mt-1 font-medium">
-                    {item.label}
-                  </span>
-
-                  {/* Shimmer hover */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-white/10 to-transparent rounded-2xl" />
-                </div>
-
-                {/* Separador ":" */}
-                {i < 3 && (
-                  <div className="absolute -right-2 md:-right-3 top-1/2 -translate-y-1/2 z-10">
-                    <motion.span
-                      animate={{ opacity: [1, 0.2, 1] }}
-                      transition={{ duration: 1, repeat: Infinity }}
-                      className="text-white/40 font-serif text-lg md:text-2xl"
-                    >
-                      :
-                    </motion.span>
-                  </div>
-                )}
-              </div>
-            </div>
-          ))}
-        </motion.div>
-
-        {/* ── CTA ── */}
+        {/* ── BOTÃO (Apenas Confirmar Presença) ── */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: loaded ? 1 : 0, y: loaded ? 0 : 20 }}
           transition={{ duration: 0.8, delay: 1.6 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          className="flex justify-center"
         >
           <motion.a
             href="#rsvp"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.96 }}
-            className="relative group px-10 md:px-14 py-4 md:py-5 rounded-full overflow-hidden font-bold text-[11px] tracking-[0.35em] uppercase text-white shadow-[0_10px_40px_rgba(0,0,0,0.3)]"
+            className="relative group px-12 md:px-16 py-4 md:py-5 rounded-full overflow-hidden font-bold text-[11px] tracking-[0.35em] uppercase text-white shadow-[0_10px_40px_rgba(0,0,0,0.3)]"
             style={{
               background: "linear-gradient(135deg, hsl(210,60%,48%) 0%, hsl(220,70%,58%) 100%)",
             }}
@@ -325,15 +216,6 @@ const HeroSection = () => {
               whileHover={{ x: "100%" }}
               transition={{ duration: 0.6, ease: "easeInOut" }}
             />
-          </motion.a>
-
-          <motion.a
-            href="#historia"
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            className="px-10 md:px-14 py-4 md:py-5 rounded-full border border-white/30 text-white/80 font-medium text-[11px] tracking-[0.3em] uppercase backdrop-blur-sm hover:border-white/60 hover:text-white transition-all duration-300"
-          >
-            Nossa História
           </motion.a>
         </motion.div>
       </motion.div>
@@ -353,22 +235,6 @@ const HeroSection = () => {
           <ChevronDown className="w-5 h-5 text-white/30" />
         </motion.div>
       </motion.div>
-
-      {/* ── BORDAS DECORATIVAS DE CANTO ── */}
-      {[
-        "top-6 left-6 border-t border-l",
-        "top-6 right-6 border-t border-r",
-        "bottom-6 left-6 border-b border-l",
-        "bottom-6 right-6 border-b border-r",
-      ].map((cls, i) => (
-        <motion.div
-          key={i}
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 2 + i * 0.1, duration: 0.8 }}
-          className={`absolute w-8 h-8 md:w-12 md:h-12 border-white/20 z-10 ${cls}`}
-        />
-      ))}
     </section>
   );
 };
