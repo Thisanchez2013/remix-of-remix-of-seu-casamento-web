@@ -11,9 +11,9 @@ interface Companion {
 
 interface RsvpFormData {
   name: string;
-  cpf: string; // Trocado de email para CPF
+  cpf: string;
   guests: string;
-  companions: Companion[]; // Array de objetos
+  companions: Companion[];
   message: string;
 }
 
@@ -21,14 +21,29 @@ const RsvpSection = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { register, handleSubmit, control, formState: { errors } } = useForm<RsvpFormData>({
+  const { register, handleSubmit, control, setValue, formState: { errors } } = useForm<RsvpFormData>({
     defaultValues: {
       guests: "0",
       companions: []
     }
   });
 
-  // Monitora a quantidade de acompanhantes
+  // Função para aplicar a máscara de CPF (000.000.000-00)
+  const formatCPF = (value: string) => {
+    return value
+      .replace(/\D/g, "") // Remove tudo que não é número
+      .replace(/(\d{3})(\d)/, "$1.$2") // Coloca ponto após os 3 primeiros números
+      .replace(/(\d{3})(\d)/, "$1.$2") // Coloca ponto após os 6 primeiros números
+      .replace(/(\d{3})(\d{1,2})$/, "$1-$2") // Coloca hífen antes dos 2 últimos números
+      .slice(0, 14); // Limita o tamanho
+  };
+
+  // Handler para mudança nos inputs de CPF
+  const handleCpfChange = (e: React.ChangeEvent<HTMLInputElement>, fieldName: any) => {
+    const formattedValue = formatCPF(e.target.value);
+    setValue(fieldName, formattedValue, { shouldValidate: true });
+  };
+
   const guestCount = useWatch({
     control,
     name: "guests",
@@ -36,8 +51,6 @@ const RsvpSection = () => {
 
   const onSubmit = async (data: RsvpFormData) => {
     setIsLoading(true);
-    
-    // Limpamos o array para enviar apenas a quantidade selecionada no select
     const submissionData = {
       ...data,
       companions: data.companions?.slice(0, parseInt(data.guests))
@@ -45,7 +58,6 @@ const RsvpSection = () => {
 
     await new Promise(resolve => setTimeout(resolve, 1800)); 
     console.log("Dados de RSVP:", submissionData);
-    
     setIsLoading(false);
     setIsSubmitted(true);
   };
@@ -110,8 +122,13 @@ const RsvpSection = () => {
                       <CreditCard size={14} className="text-primary/60" /> CPF
                     </label>
                     <input
-                      {...register("cpf", { required: true, pattern: /^\d{3}\.?\d{3}\.?\d{3}-?\d{2}$/ })}
+                      {...register("cpf", { 
+                        required: true, 
+                        pattern: /^\d{3}\.\d{3}\.\d{3}-\d{2}$/ 
+                      })}
                       placeholder="000.000.000-00"
+                      maxLength={14}
+                      onChange={(e) => handleCpfChange(e, "cpf")}
                       className={`rsvp-input ${errors.cpf ? "border-red-200" : ""}`}
                     />
                   </div>
@@ -165,8 +182,13 @@ const RsvpSection = () => {
                             <div className="group">
                               <label className="input-label text-[10px]">CPF do {index + 1}º acompanhante</label>
                               <input
-                                {...register(`companions.${index}.cpf` as const, { required: true })}
+                                {...register(`companions.${index}.cpf` as const, { 
+                                  required: true,
+                                  pattern: /^\d{3}\.\d{3}\.\d{3}-\d{2}$/
+                                })}
                                 placeholder="000.000.000-00"
+                                maxLength={14}
+                                onChange={(e) => handleCpfChange(e, `companions.${index}.cpf`)}
                                 className="rsvp-input bg-white/50 focus:bg-white"
                               />
                             </div>
