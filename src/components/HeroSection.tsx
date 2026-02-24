@@ -50,7 +50,7 @@ const HeroSection = () => {
   return (
     <section
       ref={containerRef}
-      className="relative h-screen min-h-[700px] w-full overflow-hidden flex items-center justify-center pt-16"
+      className="relative min-h-screen w-full overflow-hidden flex items-center justify-center py-20 md:py-24"
     >
       {/* ── LAYER 1: Imagem Parallax ── */}
       <motion.div style={{ y: backgroundY }} className="absolute inset-0 z-0 will-change-transform">
@@ -102,7 +102,7 @@ const HeroSection = () => {
       {/* ── CONTEÚDO PRINCIPAL ── */}
       <motion.div
         style={{ y: contentY, opacity: contentOpacity }}
-        className="relative z-10 text-center px-6 max-w-5xl mx-auto w-full"
+        className="relative z-10 text-center px-4 sm:px-6 max-w-5xl mx-auto w-full"
       >
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -136,7 +136,7 @@ const HeroSection = () => {
             transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
             className="font-serif italic font-light text-white pb-2 px-4"
             style={{ 
-              fontSize: "clamp(3.5rem, 12vw, 9rem)", 
+              fontSize: "clamp(2.8rem, 10vw, 9rem)", 
               textShadow: "0 4px 40px rgba(0,0,0,0.4)",
               lineHeight: "1.2" 
             }}
@@ -162,14 +162,14 @@ const HeroSection = () => {
         </motion.div>
 
         {/* Nome Rafaela - Ajustado padding e overflow para não cortar o 'f' */}
-        <div className="mb-6">
+        <div className="mb-4 md:mb-6">
           <motion.h1
             initial={{ y: 120, opacity: 0 }}
             animate={{ y: loaded ? 0 : 120, opacity: loaded ? 1 : 0 }}
             transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.6 }}
             className="font-serif italic font-light text-white pb-2 px-4"
             style={{ 
-              fontSize: "clamp(3.5rem, 12vw, 9rem)", 
+              fontSize: "clamp(2.8rem, 10vw, 9rem)", 
               textShadow: "0 4px 40px rgba(0,0,0,0.4)",
               lineHeight: "1.2"
             }}
@@ -182,7 +182,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: loaded ? 1 : 0, y: loaded ? 0 : 20 }}
           transition={{ duration: 1, delay: 1.1 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mb-8"
+          className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-6 mb-6 md:mb-8"
         >
           <span className="text-white/70 font-serif italic text-lg md:text-xl tracking-widest">
             15 de Novembro de 2025
@@ -204,7 +204,7 @@ const HeroSection = () => {
             href="#rsvp"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.96 }}
-            className="relative group px-12 md:px-16 py-4 md:py-5 rounded-full overflow-hidden font-bold text-[11px] tracking-[0.35em] uppercase text-white shadow-[0_10px_40px_rgba(0,0,0,0.3)]"
+            className="relative group px-8 sm:px-12 md:px-16 py-3.5 sm:py-4 md:py-5 rounded-full overflow-hidden font-bold text-[10px] sm:text-[11px] tracking-[0.35em] uppercase text-white shadow-[0_10px_40px_rgba(0,0,0,0.3)]"
             style={{
               background: "linear-gradient(135deg, hsl(210,60%,48%) 0%, hsl(220,70%,58%) 100%)",
             }}
