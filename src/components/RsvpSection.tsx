@@ -21,6 +21,8 @@ const RsvpSection = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  // O useForm mantém os dados nos campos mesmo após o envio, 
+  // permitindo a edição sem perda de informação.
   const { register, handleSubmit, control, setValue, formState: { errors } } = useForm<RsvpFormData>({
     defaultValues: {
       guests: "0",
@@ -31,14 +33,13 @@ const RsvpSection = () => {
   // Função para aplicar a máscara de CPF (000.000.000-00)
   const formatCPF = (value: string) => {
     return value
-      .replace(/\D/g, "") // Remove tudo que não é número
-      .replace(/(\d{3})(\d)/, "$1.$2") // Coloca ponto após os 3 primeiros números
-      .replace(/(\d{3})(\d)/, "$1.$2") // Coloca ponto após os 6 primeiros números
-      .replace(/(\d{3})(\d{1,2})$/, "$1-$2") // Coloca hífen antes dos 2 últimos números
-      .slice(0, 14); // Limita o tamanho
+      .replace(/\D/g, "")
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d{1,2})$/, "$1-$2")
+      .slice(0, 14);
   };
 
-  // Handler para mudança nos inputs de CPF
   const handleCpfChange = (e: React.ChangeEvent<HTMLInputElement>, fieldName: any) => {
     const formattedValue = formatCPF(e.target.value);
     setValue(fieldName, formattedValue, { shouldValidate: true });
@@ -51,15 +52,41 @@ const RsvpSection = () => {
 
   const onSubmit = async (data: RsvpFormData) => {
     setIsLoading(true);
-    const submissionData = {
-      ...data,
-      companions: data.companions?.slice(0, parseInt(data.guests))
+    
+    // URL da sua API do Google Apps Script
+    const API_URL = "https://script.google.com/macros/s/AKfycbxIlHVYupU719qI2P_NB3wFB7CLCimJjdedq4xj7NHACkEN9JV8Y0D_k-Y0fRV7x0kb/exec";
+
+    // Formatando os dados para as colunas da planilha (A a H)
+    const payload = {
+      name: data.name,
+      cpf: data.cpf,
+      qtdAcompanhantes: data.guests,
+      message: data.message,
+      // Mapeia acompanhantes para campos individuais. 
+      // O Script do Google usará esses nomes de campos para preencher as colunas E, F e G.
+      acomp1: data.companions?.[0] ? `${data.companions[0].name} - ${data.companions[0].cpf}` : "",
+      acomp2: data.companions?.[1] ? `${data.companions[1].name} - ${data.companions[1].cpf}` : "",
+      acomp3: data.companions?.[2] ? `${data.companions[2].name} - ${data.companions[2].cpf}` : "",
     };
 
-    await new Promise(resolve => setTimeout(resolve, 1800)); 
-    console.log("Dados de RSVP:", submissionData);
-    setIsLoading(false);
-    setIsSubmitted(true);
+    try {
+      await fetch(API_URL, {
+        method: "POST",
+        mode: "no-cors", 
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      // Sucesso: a planilha agora atualiza a linha se o CPF já existir
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error("Erro ao enviar:", error);
+      alert("Erro ao salvar presença. Por favor, tente novamente.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const guestFields = Array.from({ length: parseInt(guestCount) || 0 }, (_, i) => i);
@@ -84,7 +111,7 @@ const RsvpSection = () => {
           <span className="section-label">R.S.V.P</span>
           <h2 className="section-title">Confirmar Presença</h2>
           <p className="mt-4 text-slate-500 font-serif italic text-lg">
-            Por favor, preencha os dados abaixo para validarmos sua entrada.
+            Sua presença é essencial para nós. Por favor, valide seus dados abaixo.
           </p>
         </motion.div>
 
@@ -106,7 +133,6 @@ const RsvpSection = () => {
               >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-10">
                   
-                  {/* Nome Completo do Titular */}
                   <div className="md:col-span-2 group">
                     <label className="input-label">Nome Completo</label>
                     <input
@@ -116,7 +142,6 @@ const RsvpSection = () => {
                     />
                   </div>
 
-                  {/* CPF do Titular */}
                   <div className="group">
                     <label className="input-label flex items-center gap-2">
                       <CreditCard size={14} className="text-primary/60" /> CPF
@@ -133,7 +158,6 @@ const RsvpSection = () => {
                     />
                   </div>
 
-                  {/* Acompanhantes Select */}
                   <div className="group">
                     <label className="input-label">Acompanhantes</label>
                     <div className="relative">
@@ -149,7 +173,7 @@ const RsvpSection = () => {
                     </div>
                   </div>
 
-                  {/* CAMPOS DINÂMICOS: Nome + CPF dos Acompanhantes */}
+                  {/* Acompanhantes dinâmicos */}
                   <AnimatePresence>
                     {guestFields.length > 0 && (
                       <motion.div 
@@ -198,7 +222,6 @@ const RsvpSection = () => {
                     )}
                   </AnimatePresence>
 
-                  {/* Mensagem */}
                   <div className="md:col-span-2 group">
                     <label className="input-label">Recado para os noivos</label>
                     <textarea
@@ -225,14 +248,18 @@ const RsvpSection = () => {
                 </div>
               </motion.form>
             ) : (
-              /* Sucesso */
               <motion.div key="success" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-16">
                 <div className="w-24 h-24 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-10 shadow-inner">
                   <Check size={48} />
                 </div>
                 <h3 className="font-serif text-4xl mb-6 italic text-slate-900">Confirmado!</h3>
-                <p className="text-slate-600 max-w-sm mx-auto">Tudo certo! Seus dados foram salvos. Mal podemos esperar por esse momento.</p>
-                <button onClick={() => setIsSubmitted(false)} className="mt-12 text-[10px] font-bold tracking-[0.4em] uppercase text-primary/50 hover:text-primary border-b border-primary/20 pb-1">Editar confirmação</button>
+                <p className="text-slate-600 max-w-sm mx-auto">Tudo certo! Sua presença foi confirmada. Se precisar alterar algo, clique abaixo para editar.</p>
+                <button 
+                  onClick={() => setIsSubmitted(false)} 
+                  className="mt-12 text-[10px] font-bold tracking-[0.4em] uppercase text-primary/50 hover:text-primary border-b border-primary/20 pb-1"
+                >
+                  Editar confirmação
+                </button>
               </motion.div>
             )}
           </AnimatePresence>

@@ -185,11 +185,11 @@ const HeroSection = () => {
           className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-6 mb-6 md:mb-8"
         >
           <span className="text-white/70 font-serif italic text-lg md:text-xl tracking-widest">
-            15 de Novembro de 2025
+            04 de Junho de 2027
           </span>
           <span className="hidden sm:block w-1 h-1 rounded-full bg-white/30" />
           <span className="text-white/50 text-sm tracking-[0.2em] uppercase font-medium">
-            Espaço das Palmeiras · São Paulo
+            Villa Vezzane · Mairiporã — SP
           </span>
         </motion.div>
 

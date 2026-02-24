@@ -1,6 +1,6 @@
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
-import { Heart, Gift, Sparkles, ArrowRight, Info, MapPin } from "lucide-react";
+import { Heart, Gift, ArrowRight, Info, MapPin } from "lucide-react";
 
 import imgPanelas from "@/assets/gift-panelas.jpg";
 import imgCama from "@/assets/gift-cama.jpg";
@@ -80,43 +80,68 @@ const GiftCard = ({ gift, index, inView }: { gift: any; index: number; inView: b
       transition={{ duration: 0.8, delay: index * 0.1 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="relative group bg-white overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-500"
+      className="relative group bg-white overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 rounded-sm"
     >
       <div className="aspect-[4/5] relative overflow-hidden">
+        {/* Imagem com zoom suave e filtro sutil */}
         <motion.img
           src={gift.image}
           alt={gift.name}
-          animate={{ scale: isHovered ? 1.05 : 1 }}
-          transition={{ duration: 0.7 }}
+          animate={{ 
+            scale: isHovered ? 1.08 : 1,
+            filter: isHovered ? "grayscale(20%) brightness(0.9)" : "grayscale(0%) brightness(1)"
+          }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           className="w-full h-full object-cover"
         />
-        <div className={`absolute inset-0 bg-neutral-900/20 transition-opacity duration-500 ${isHovered ? 'opacity-60' : 'opacity-20'}`} />
 
-        <div className="absolute inset-0 p-6 flex flex-col justify-end text-white">
-          <motion.div animate={{ y: isHovered ? -5 : 0 }}>
-            <span className="text-[9px] tracking-[0.3em] uppercase font-bold mb-1 block opacity-80 text-wedding-gold">
+        {/* Overlay Escuro Suave para Contraste */}
+        <div 
+          className={`absolute inset-0 bg-neutral-900 transition-opacity duration-500 ${
+            isHovered ? 'opacity-50' : 'opacity-0'
+          }`} 
+        />
+        
+        {/* Gradiente de suporte constante no rodapé para legibilidade inicial */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
+
+        {/* Conteúdo que se centraliza no Hover */}
+        <div className="absolute inset-0 p-8 flex flex-col items-center justify-center text-center text-white">
+          
+          <motion.div 
+            animate={{ 
+              y: isHovered ? -15 : 80, // Sobe do rodapé para o centro
+            }}
+            transition={{ duration: 0.5, ease: "backOut" }}
+          >
+            <span className="text-[10px] tracking-[0.4em] uppercase font-bold mb-2 block text-wedding-gold">
               {gift.category}
             </span>
-            <h3 className="font-serif text-xl italic mb-2">{gift.name}</h3>
+            <h3 className="font-serif text-2xl md:text-3xl italic mb-3 leading-tight">
+              {gift.name}
+            </h3>
           </motion.div>
 
           <AnimatePresence>
             {isHovered && (
               <motion.div
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 10 }}
-                className="space-y-3"
+                transition={{ duration: 0.4 }}
+                className="flex flex-col items-center"
               >
-                <p className="text-xs font-light leading-relaxed opacity-90 line-clamp-2">
+                <div className="w-12 h-[1px] bg-wedding-gold/60 mb-4" />
+                <p className="text-xs font-light leading-relaxed mb-6 max-w-[90%] italic opacity-90">
                   {gift.desc}
                 </p>
-                <div className="pt-3 flex items-center justify-between border-t border-white/20">
-                  <span className="text-base font-serif italic">{gift.price}</span>
-                  <button className="flex items-center gap-2 text-[9px] tracking-[0.2em] uppercase bg-white text-black px-4 py-2 rounded-full hover:bg-wedding-gold hover:text-white transition-colors">
-                    Presentear
-                  </button>
-                </div>
+                <span className="text-xl font-serif italic mb-6 block text-wedding-gold">
+                  {gift.price}
+                </span>
+                
+                <button className="flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase bg-white text-black px-8 py-3 rounded-full hover:bg-wedding-gold hover:text-white transition-all duration-300 transform hover:scale-105 shadow-xl">
+                  Presentear
+                </button>
               </motion.div>
             )}
           </AnimatePresence>
@@ -134,7 +159,7 @@ const PresentesSection = () => {
     <section id="presentes" className="py-24 md:py-32 bg-[#FAF9F6] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         
-        {/* Header Profissional */}
+        {/* Header */}
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 20 }}
@@ -154,21 +179,21 @@ const PresentesSection = () => {
           </p>
         </motion.div>
 
-        {/* --- DESTAQUE: LUA DE MEL (HORIZONTAL) --- */}
+        {/* Destaque Lua de Mel */}
         <motion.div
           initial={{ opacity: 0, scale: 0.98 }}
           animate={inView ? { opacity: 1, scale: 1 } : {}}
           transition={{ duration: 1, delay: 0.2 }}
-          className="relative w-full h-[400px] md:h-[500px] mb-12 group overflow-hidden shadow-2xl"
+          className="relative w-full h-[400px] md:h-[500px] mb-12 group overflow-hidden shadow-2xl rounded-sm"
         >
           <motion.img
             src={imgLua}
             alt="Lua de Mel"
             className="absolute inset-0 w-full h-full object-cover"
-            whileHover={{ scale: 1.03 }}
-            transition={{ duration: 10 }} // Movimento bem lento e luxuoso
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 8 }}
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/30 to-transparent" />
           
           <div className="relative h-full flex flex-col justify-center px-8 md:px-16 max-w-2xl text-white">
             <motion.div
@@ -197,7 +222,6 @@ const PresentesSection = () => {
             </motion.div>
           </div>
 
-          {/* Badge flutuante de Impacto */}
           <div className="absolute top-8 right-8 hidden md:block">
             <div className="backdrop-blur-md bg-white/10 border border-white/20 p-4 rounded-2xl flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-wedding-gold/20 flex items-center justify-center text-wedding-gold">
@@ -211,7 +235,7 @@ const PresentesSection = () => {
           </div>
         </motion.div>
 
-        {/* Grid de Presentes (Outros Itens) */}
+        {/* Grid de Presentes */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {gifts.map((gift, i) => (
             <GiftCard key={i} gift={gift} index={i} inView={inView} />

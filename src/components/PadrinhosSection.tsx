@@ -120,7 +120,7 @@ const PadrinhosSection = () => {
 
           <h2 className="section-title italic">
             Padrinhos{" "}
-            <span style={{ fontFamily: "'Great Vibes', cursive", fontSize: "0.7em", opacity: 0.7 }}>&</span>{" "}
+            <span style={{ fontFamily: "'Great Vibes', cursive", fontSize: "1.0em" }}>e</span>{" "}
             Madrinhas
           </h2>
 
